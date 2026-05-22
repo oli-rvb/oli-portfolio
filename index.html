@@ -83,6 +83,8 @@
       width: 100%;
     }
 
+    .mobile-break { display: none; }
+
     .section {
       display: flex;
       flex-direction: column;
@@ -166,6 +168,40 @@
     @keyframes rise {
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @media (max-width: 640px) {
+      body {
+        justify-content: flex-start;
+        padding: 0 1.5rem 3rem;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        height: 50vh;
+        margin-bottom: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      h1 {
+        font-size: clamp(4.5rem, 20vw, 7rem);
+        line-height: 0.85;
+      }
+
+      .tagline {
+        margin-top: 2rem;
+        text-align: left;
+        text-align-last: left;
+        width: auto !important;
+      }
+
+      .mobile-break { display: inline; }
+    }
   </style>
 </head>
 <body>
@@ -173,7 +209,7 @@
 
     <div class="header">
       <h1>Olivier<br><span id="lastname">Nguyen</span></h1>
-      <p class="tagline">Product Manager &amp; Tech Enthusiast</p>
+      <p class="tagline">Product Manager &amp;<br class="mobile-break"> Tech Enthusiast</p>
     </div>
 
     <div class="content">
