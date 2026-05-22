@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bernard Lhermitte</title>
+  <title>Olivier Nguyen</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +49,7 @@
     }
 
     .header {
-      margin-bottom: 3.5rem;
+      margin-bottom: 2rem;
       opacity: 0;
       transform: translateY(18px);
       animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
@@ -59,20 +59,28 @@
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
       font-size: clamp(3.2rem, 9.5vw, 7.2rem);
-      line-height: 1;
+      line-height: 0.7;
       letter-spacing: -0.01em;
       color: var(--ink);
       transition: color 0.4s ease;
     }
 
     .tagline {
-      margin-top: 0.9rem;
+      margin-top: 3rem;
       font-size: 0.78rem;
       font-weight: 400;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
       transition: color 0.4s ease;
+      display: block;
+      text-align: justify;
+      text-align-last: justify;
+    }
+    .tagline::after {
+      content: '';
+      display: inline-block;
+      width: 100%;
     }
 
     .section {
@@ -164,7 +172,7 @@
   <div class="container">
 
     <div class="header">
-      <h1>Olivier<br>Nguyen</h1>
+      <h1>Olivier<br><span id="lastname">Nguyen</span></h1>
       <p class="tagline">Product Manager &amp; Tech Enthusiast</p>
     </div>
 
@@ -186,19 +194,32 @@
       <div class="section">
         <span class="section-label">Website Upgrade</span>
         <ul class="links">
-          <li><a href="upway/">Upway Upgrade</a></li>
+          <li><a href="upway/">Upway upgrade (e-bike shop)</a></li>
         </ul>
       </div>
 
       <div class="section">
         <span class="section-label">Website Created</span>
         <ul class="links">
-          <li><a href="bluesuburbhour/">My Rock Band 3D Website</a></li>
+          <li><a href="bluesuburbhour/">Rock band portfolio (3D website)</a></li>
         </ul>
       </div>
 
     </div>
 
   </div>
+
+  <script>
+    function matchTaglineWidth() {
+      const lastname = document.getElementById('lastname');
+      const tagline = document.querySelector('.tagline');
+      if (!lastname || !tagline) return;
+      const w = lastname.getBoundingClientRect().width;
+      tagline.style.width = w + 'px';
+    }
+    document.fonts.ready.then(matchTaglineWidth);
+    window.addEventListener('resize', matchTaglineWidth);
+    matchTaglineWidth();
+  </script>
 </body>
 </html>
