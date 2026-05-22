@@ -114,6 +114,41 @@
       color: var(--ink);
     }
 
+    .articles {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-left: 0.9rem;
+      max-width: 480px;
+    }
+
+    .articles li {
+      display: flex;
+      gap: 0.45rem;
+      align-items: flex-start;
+    }
+
+    .articles .bullet {
+      color: var(--rule);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+
+    .articles a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--muted);
+      line-height: 1.4;
+      transition: color 0.2s ease;
+    }
+
+    .articles a:hover {
+      color: var(--ink);
+    }
+
     .content {
       display: flex;
       flex-direction: column;
@@ -129,7 +164,7 @@
   <div class="container">
 
     <div class="header">
-      <h1>Bernard<br>Lhermitte</h1>
+      <h1>Olivier<br>Nguyen</h1>
       <p class="tagline">Product Manager &amp; Tech Enthusiast</p>
     </div>
 
@@ -138,8 +173,13 @@
       <div class="section">
         <span class="section-label">Profiles</span>
         <ul class="links">
-          <li><a href="www.linkedin.com/in/olivier-nguyen-innov" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://medium.com/@olivier.nguyen" target="_blank" rel="noopener">Medium</a></li>
+          <li><a href="https://www.linkedin.com/in/olivier-nguyen-innov" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li>
+            <a href="https://medium.com/@olivier.nguyen" target="_blank" rel="noopener">Medium</a>
+            <ul class="articles">
+              <li><span class="bullet">╰</span><a href="https://medium.com/@olivier.nguyen/comment-transformer-100k-clients-dun-e-commerce-en-3-personas-572fdec60b73" target="_blank" rel="noopener">Comment transformer 100k clients<br>d'un e-commerce en 3 personas</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
 
