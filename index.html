@@ -79,6 +79,9 @@
     body.dark .portrait img {
       filter: grayscale(15%) contrast(0.98) brightness(0.92);
     }
+    .portrait img.dimmed {
+      filter: grayscale(40%) brightness(0.5) contrast(0.9);
+    }
 
     .header {
       margin-bottom: 2rem;
@@ -201,6 +204,28 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    #preview-bubble {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      width: 300px;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    #preview-bubble.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    #preview-bubble img {
+      width: 100%;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
     @media (max-width: 820px) {
       .container {
         grid-template-columns: minmax(0, 1fr);
@@ -260,11 +285,11 @@
       <div class="section">
         <span class="section-label">Profiles</span>
         <ul class="links">
-          <li><a href="https://www.linkedin.com/in/olivier-nguyen-innov" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/olivier-nguyen-innov" target="_blank" rel="noopener" data-preview="linkedin_screenshot.jpeg">LinkedIn</a></li>
           <li>
-            <a href="https://medium.com/@olivier.nguyen" target="_blank" rel="noopener">Medium</a>
+            <a href="https://medium.com/@olivier.nguyen" target="_blank" rel="noopener" data-preview="medium_screenshot.jpeg">Medium</a>
             <ul class="articles">
-              <li><span class="bullet">╰</span><a href="https://medium.com/@olivier.nguyen/comment-transformer-100k-clients-dun-e-commerce-en-3-personas-572fdec60b73" target="_blank" rel="noopener">Comment transformer 100k clients<br>d'un e-commerce en 3 personas ?</a></li>
+              <li><span class="bullet">╰</span><a href="https://medium.com/@olivier.nguyen/comment-transformer-100k-clients-dun-e-commerce-en-3-personas-572fdec60b73" target="_blank" rel="noopener" data-preview="medium_screenshot.jpeg">Comment transformer 100k clients<br>d'un e-commerce en 3 personas ?</a></li>
             </ul>
           </li>
         </ul>
@@ -293,6 +318,8 @@
     </div>
 
   </div>
+
+  <div id="preview-bubble"><img alt=""></div>
 
   <script>
     function matchTaglineWidth() {
@@ -331,6 +358,39 @@
     document.fonts.ready.then(refresh);
     window.addEventListener('resize', refresh);
     refresh();
+
+    const bubble = document.getElementById('preview-bubble');
+    const bubbleImg = bubble.querySelector('img');
+    let hideTimeout;
+    document.querySelectorAll('a[data-preview]').forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimeout);
+        const src = link.dataset.preview;
+        const portrait = document.querySelector('.portrait');
+        const rect = portrait.getBoundingClientRect();
+        bubble.style.left = (rect.left + (rect.width - 300) / 2) + 'px';
+        bubble.style.top  = (rect.top + rect.height * 0.15) + 'px';
+        portrait.querySelector('img').classList.add('dimmed');
+        if (bubble.classList.contains('visible')) {
+          if (bubbleImg.getAttribute('src') !== src) {
+            bubbleImg.style.opacity = '0';
+            setTimeout(() => {
+              bubbleImg.src = src;
+              bubbleImg.style.opacity = '1';
+            }, 200);
+          }
+        } else {
+          bubbleImg.src = src;
+          bubble.classList.add('visible');
+        }
+      });
+      link.addEventListener('mouseleave', () => {
+        hideTimeout = setTimeout(() => {
+          bubble.classList.remove('visible');
+          document.querySelector('.portrait img').classList.remove('dimmed');
+        }, 50);
+      });
+    });
   </script>
 </body>
 </html>
