@@ -57,6 +57,7 @@
     .left { min-width: 0; width: 100%; }
 
     .portrait {
+      position: relative;
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -66,6 +67,20 @@
       animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
     }
 
+    .portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      pointer-events: none;
+    }
+
+    .portrait.dimmed::after {
+      opacity: 0.55;
+    }
+
     .portrait img {
       width: 100%;
       height: 100%;
@@ -73,14 +88,10 @@
       object-position: 72% center;
       display: block;
       filter: grayscale(8%) contrast(1.02);
-      transition: filter 0.4s ease;
     }
 
     body.dark .portrait img {
       filter: grayscale(15%) contrast(0.98) brightness(0.92);
-    }
-    .portrait img.dimmed {
-      filter: grayscale(40%) brightness(0.5) contrast(0.9);
     }
 
     .header {
@@ -298,14 +309,14 @@
       <div class="section">
         <span class="section-label">Website Upgrade</span>
         <ul class="links">
-          <li><a href="upway/">Upway upgrade (e-bike shop)</a></li>
+          <li><a href="upway-upgrade/" data-preview="upway_screenshot.jpeg">Upway upgrade (e-bike shop)</a></li>
         </ul>
       </div>
 
       <div class="section">
         <span class="section-label">Website Created</span>
         <ul class="links">
-          <li><a href="bluesuburbhour/">Rock band portfolio (3D website)</a></li>
+          <li><a href="bluesuburbhour/" data-preview="rockband_screenshot.jpeg">Rock band portfolio (3D website)</a></li>
         </ul>
       </div>
 
@@ -370,7 +381,7 @@
         const rect = portrait.getBoundingClientRect();
         bubble.style.left = (rect.left + (rect.width - 300) / 2) + 'px';
         bubble.style.top  = (rect.top + rect.height * 0.15) + 'px';
-        portrait.querySelector('img').classList.add('dimmed');
+        portrait.classList.add('dimmed');
         if (bubble.classList.contains('visible')) {
           if (bubbleImg.getAttribute('src') !== src) {
             bubbleImg.style.opacity = '0';
@@ -387,7 +398,7 @@
       link.addEventListener('mouseleave', () => {
         hideTimeout = setTimeout(() => {
           bubble.classList.remove('visible');
-          document.querySelector('.portrait img').classList.remove('dimmed');
+          document.querySelector('.portrait').classList.remove('dimmed');
         }, 50);
       });
     });
