@@ -376,8 +376,11 @@
     const bubble = document.getElementById('preview-bubble');
     const bubbleImg = bubble.querySelector('img');
     let hideTimeout;
+    // Touch screens fire mouseenter on tap: skip previews so the tap just follows the link.
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
     document.querySelectorAll('a[data-preview]').forEach(link => {
       link.addEventListener('mouseenter', () => {
+        if (!canHover.matches) return;
         clearTimeout(hideTimeout);
         const src = link.dataset.preview;
         const portrait = document.querySelector('.portrait');
